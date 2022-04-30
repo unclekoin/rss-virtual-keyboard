@@ -1,10 +1,9 @@
 .container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
+  position: absolute;
+  width: fit-content;
 
-  @media (max-width: 500px) {
-    padding: 1rem 0.5rem;
-  }
+  display: flex;
+  flex-direction: column;
+  @include position-center;
 }
 

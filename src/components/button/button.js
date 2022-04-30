@@ -8,7 +8,7 @@ const button = (content) => {
     content
   })
 
-  return btn.create()
+  return btn.node;
 }
 
 export default button;

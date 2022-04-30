@@ -6,7 +6,7 @@
   border-right-color: $misty-blue;
   border-top-color: $misty-blue;
   border-radius: 3px;
-  transition: all 0.2s linear;
+  transition: all 0.1s linear;
   cursor: pointer;
 
   @media (max-width: 1000px) {
@@ -37,18 +37,9 @@
     }
   }
 
-  &.backspace {
-    grid-column: span 4;
-  }
-
-  &.enter {
-    grid-column: span 4;
-  }
-
-  &.caps-lock {
-    grid-column: span 4;
-  }
-
+  &.backspace,
+  &.enter,
+  &.caps-lock,
   &.shift {
     grid-column: span 4;
   }
@@ -65,16 +56,8 @@
     grid-column: span 14;
   }
 
-  &:hover {
-    color: $misty-blue;
-  }
-
   &:active {
-    color: $white;
-    background-color: rgba($dark-blue, 0.75);
-    border-color: rgba($blue-grey, 0.75);
-    border-right-color: rgba($misty-blue, 0.75);
-    border-top-color: rgba($misty-blue, 0.75);
-    text-shadow: -1px 0 5px $dark-blue
+    color: $neon;
+    font-weight: 500;
   }
 }

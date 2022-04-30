@@ -1,0 +1,14 @@
+.display {
+  max-width: 100%;
+  min-height: 20rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+  color: $dark-blue;
+  background-color: rgba($white, 0.75);
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+}

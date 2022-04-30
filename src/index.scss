@@ -9,11 +9,16 @@
 @import "app";
 @import "components/button/button";
 @import "components/keyboard/keyboard";
+@import "components/display/display";
 
 body {
   width: 100%;
-  min-height: 100vh;
   background-image: url(assets/images/carbon-fibre.webp);
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
 }
 
 
