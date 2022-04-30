@@ -1,19 +1,8 @@
-import logo from './assets/images/logo.png';
+import keyboard from './components/keyboard';
 
 const app = document.createElement('div');
-app.className = 'app';
+app.className = 'container';
 
-const container = document.createElement('div');
-container.className = 'container';
-
-const title = document.createElement('h1');
-title.textContent = 'Webpack Starter';
-
-const image = document.createElement('img');
-image.src = logo;
-
-container.append(title, image);
-
-app.append(container);
+app.append(keyboard());
 
 export default app;

@@ -31,7 +31,26 @@ body {
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
 ::selection {
-  background-color: $primary-color;
-  color: $secondary-color;
+  background-color: $dark-blue;
+  color: $white;
 }

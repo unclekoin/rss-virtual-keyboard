@@ -6,32 +6,15 @@
 @import "sass/base/base";
 @import "sass/base/typography";
 
+@import "app";
+@import "components/button/button";
+@import "components/keyboard/keyboard";
+
 body {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: $secondary-color;
-  background-color: $primary-color;
+  width: 100%;
+  min-height: 100vh;
   background-image: url(assets/images/carbon-fibre.webp);
 }
 
-.container {
-  max-width: 100%;
-  padding: 50px 20px;
-  text-align: center;
-}
-
-h1 {
-  font-size: 35px;
-  margin: 0 0 30px;
-  letter-spacing: 5px;
-}
-
-img {
-  max-width: 200px;
-  width: 100%;
-}
 
 

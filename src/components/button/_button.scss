@@ -1,0 +1,80 @@
+.btn {
+  grid-column: span 2;
+  color: $blue-grey;
+  background-color: $dark-blue;
+  border: 3px solid $blue-grey;
+  border-right-color: $misty-blue;
+  border-top-color: $misty-blue;
+  border-radius: 3px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+
+  @media (max-width: 1000px) {
+    font-size: 1.6rem;
+    border-width: 1px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 1rem;
+    border: none;
+    border-radius: 1px;
+  }
+
+  &-text-sm {
+    font-size: 1.8rem;
+
+    @media (max-width: 1000px) {
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: 700px) {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 0.8rem;
+    }
+  }
+
+  &.backspace {
+    grid-column: span 4;
+  }
+
+  &.enter {
+    grid-column: span 4;
+  }
+
+  &.caps-lock {
+    grid-column: span 4;
+  }
+
+  &.shift {
+    grid-column: span 4;
+  }
+
+  &.second {
+    grid-column: span 2;
+  }
+
+  &.ctrl {
+    grid-column: span 3;
+  }
+
+  &.space {
+    grid-column: span 14;
+  }
+
+  &:hover {
+    color: $misty-blue;
+  }
+
+  &:active {
+    color: $white;
+    background-color: rgba($dark-blue, 0.75);
+    border-color: rgba($blue-grey, 0.75);
+    border-right-color: rgba($misty-blue, 0.75);
+    border-top-color: rgba($misty-blue, 0.75);
+    text-shadow: -1px 0 5px $dark-blue
+  }
+}
