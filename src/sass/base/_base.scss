@@ -43,14 +43,10 @@ a {
 
 button {
   border: none;
+  outline: none;
   background-color: transparent;
 }
 
 ul {
   list-style: none;
-}
-
-::selection {
-  background-color: $dark-blue;
-  color: $white;
 }

@@ -1,40 +1,17 @@
 .btn {
   grid-column: span 2;
-  color: $blue-grey;
-  background-color: $dark-blue;
-  border: 3px solid $blue-grey;
-  border-right-color: $misty-blue;
-  border-top-color: $misty-blue;
-  border-radius: 3px;
-  transition: all 0.1s linear;
+  color: $font-color;
+  background-color: $background;
+  border-radius: 20%;
+  box-shadow: 5px 5px 10px $dark-shadow, -5px -5px 10px $light-shadow;
   cursor: pointer;
 
-  @media (max-width: 1000px) {
-    font-size: 1.6rem;
-    border-width: 1px;
-    border-radius: 2px;
+  &:active {
+    box-shadow: 1px 1px 2px $active-light-shadow, -1px -1px 2px $active-dark-shadow;
   }
 
-  @media (max-width: 500px) {
-    font-size: 1rem;
-    border: none;
-    border-radius: 1px;
-  }
-
-  &-text-sm {
-    font-size: 1.8rem;
-
-    @media (max-width: 1000px) {
-      font-size: 1.4rem;
-    }
-
-    @media (max-width: 700px) {
-      font-size: 1.1rem;
-    }
-
-    @media (max-width: 500px) {
-      font-size: 0.8rem;
-    }
+  &-big {
+    border-radius: 10px;
   }
 
   &.backspace,
@@ -54,10 +31,5 @@
 
   &.space {
     grid-column: span 14;
-  }
-
-  &:active {
-    color: $neon;
-    font-weight: 500;
   }
 }

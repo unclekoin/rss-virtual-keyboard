@@ -15,13 +15,13 @@ const keyboard = (isCapsLock = false, lang = 'en') => {
     const btn = button(content);
 
     if (isCapsLock && content === 'caps lock') {
-      btn.style.color = '#0AEFFF'
+      btn.style.color = '#FD2BFF'
       btn.style.fontWeight = '500'
     };
     if (content === 'shift' && isShift) btn.classList.add('second');
     if (content === 'shift') isShift = true;
     if (content.length > 1) {
-      btn.classList.add('btn-text-sm', content.split(' ').join('-'));
+      btn.classList.add('btn-big', content.split(' ').join('-'));
     }
     ;
     if (content.includes('86')) {

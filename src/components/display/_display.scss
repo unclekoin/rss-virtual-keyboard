@@ -1,11 +1,14 @@
 .display {
   max-width: 100%;
   min-height: 20rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
   padding: 1rem;
   font-size: 1.6rem;
-  color: $dark-blue;
-  background-color: rgba($white, 0.75);
+  color: $font-color;
+  background-color: $background;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: inset 3px 3px 5px $dark-shadow, inset -2px -2px 5px $light-shadow;
   resize: none;
 
   &:focus {
