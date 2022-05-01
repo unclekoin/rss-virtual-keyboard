@@ -1,12 +1,12 @@
-import Element from '../../core/Element';
+import Element from '../../core/classes/Element';
 
 const display = () => {
   const element = new Element({
-    element: 'textarea',
+    tag: 'textarea',
     cls: ['display']
   })
 
-  return element.node;
+  return element.element;
 }
 
 export default display;

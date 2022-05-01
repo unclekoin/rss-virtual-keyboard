@@ -1,9 +1,9 @@
 .btn {
   grid-column: span 2;
   color: $font-color;
-  background-color: $background;
+  background-color: $button-background;
   border-radius: 20%;
-  box-shadow: 5px 5px 10px $dark-shadow, -5px -5px 10px $light-shadow;
+  box-shadow: 3px 3px 7px $dark-shadow, -3px -3px 7px $light-shadow;
   cursor: pointer;
 
   &:active {
@@ -31,5 +31,15 @@
 
   &.space {
     grid-column: span 14;
+  }
+}
+
+.theme .btn {
+  color: #D7D7D8;
+  background-color: #27292B;
+  box-shadow: 3px 3px 7px #0A0A0A, -3px -3px 7px #858383;
+
+  &:active {
+    box-shadow: 1px 1px 2px #858383, -1px -1px 2px #0A0A0A;
   }
 }

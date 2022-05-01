@@ -1,17 +1,20 @@
 .display {
-  max-width: 100%;
-  min-height: 20rem;
+  width: 100%;
+  height: 20rem;
   margin-bottom: 3rem;
-  padding: 1rem;
+  padding: 1.5rem;
   font-size: 1.6rem;
   color: $font-color;
   background-color: $background;
   border: none;
   border-radius: 1rem;
   box-shadow: inset 3px 3px 5px $dark-shadow, inset -2px -2px 5px $light-shadow;
+  outline: none;
   resize: none;
+}
 
-  &:focus {
-    outline: none;
-  }
+.theme .display {
+  color: #D7D7D8;
+  background-color: #313336;
+  box-shadow: inset 3px 3px 5px #0A0A0A, inset -2px -2px 5px #858383;
 }

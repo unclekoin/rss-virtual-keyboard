@@ -1,4 +1,4 @@
-import { createApp } from '../app';
+import { createApp } from '../../app';
 let isCapsLock = false;
 const virtualKeyboardHandler = () => {
     const display = document.querySelector('.display');

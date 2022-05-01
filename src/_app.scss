@@ -1,9 +1,17 @@
-.container {
-  position: absolute;
-  width: fit-content;
+.app {
+  position: relative;
+  background-color: $background;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
 
-  display: flex;
-  flex-direction: column;
-  @include position-center;
+  &.theme {
+    background-color: #313336;
+  }
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+}

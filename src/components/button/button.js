@@ -1,14 +1,14 @@
-import Element from '../../core/Element';
+import Element from '../../core/classes/Element';
 
 const button = (content) => {
   const btn = new Element({
-    element: 'button',
+    tag: 'button',
     cls: ['btn', 'btn-primary'],
     id: content.split(' ').join('-'),
     content
   })
 
-  return btn.node;
+  return btn.element;
 }
 
 export default button;

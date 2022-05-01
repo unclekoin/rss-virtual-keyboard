@@ -1,7 +1,7 @@
-import data from '../core/data.json';
-import display from '../components/display/display';
-import keyboard from '../components/keyboard';
-import app from '../app';
+import data from '../../data/data.json';
+import display from '../../components/display/display';
+import keyboard from '../../components/keyboard';
+import app from '../../app';
 
 const keyboardHandler = () => {
   document.addEventListener('keydown', (e) => {

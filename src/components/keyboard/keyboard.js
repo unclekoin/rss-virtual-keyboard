@@ -1,12 +1,11 @@
-import Element from '../../core/Element';
+import Element from '../../core/classes/Element';
 import button from '../button';
-import data from '../../core/data.json';
+import data from '../../data/data.json';
 
 const keyboard = (isCapsLock = false, lang = 'en') => {
   const element = new Element({
-    element: 'div',
     cls: ['keyboard']
-  }).node;
+  }).element;
 
   let isShift;
 

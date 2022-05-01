@@ -7,19 +7,8 @@
 @import "sass/base/typography";
 
 @import "app";
+
 @import "components/button/button";
 @import "components/keyboard/keyboard";
 @import "components/display/display";
-
-body {
-  width: 100%;
-  background-color: $body-background;
-}
-
-#root {
-  position: relative;
-  min-height: 100vh;
-}
-
-
-
+@import "components/theme-toggle/theme-toggle";
