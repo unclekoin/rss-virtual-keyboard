@@ -21,7 +21,7 @@ export const createApp = (isCapsLock, lang) => {
   virtualKeyboardHandler();
 }
 
-createApp(false, 'ru')
+createApp(false, 'en')
 
 window.addEventListener('load', () => {
   virtualKeyboardHandler();

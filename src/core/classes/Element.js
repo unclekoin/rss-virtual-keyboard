@@ -22,7 +22,7 @@ export default class Element {
     const element = document.createElement(this.#tag);
     element.classList.add(...this.#cls);
     if (this.#content) element.textContent = this.#content;
-    if (this.id) element.id = this.id;
+    if (this.#id) element.id = this.#id;
     this.#element = element;
   }
 }

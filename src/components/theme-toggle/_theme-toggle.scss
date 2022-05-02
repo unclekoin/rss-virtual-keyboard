@@ -6,6 +6,7 @@
   height: 3rem;
   border-radius: 50%;
   box-shadow: 2px 2px 7px $dark-shadow, -2px -2px 7px $light-shadow;
+  transition: all 0.2s linear;
   cursor: pointer;
 
   display: flex;

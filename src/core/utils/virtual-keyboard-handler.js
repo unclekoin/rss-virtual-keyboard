@@ -1,9 +1,19 @@
 import { createApp } from '../../app';
 let isCapsLock = false;
+
 const virtualKeyboardHandler = () => {
     const display = document.querySelector('.display');
     const keyboard = document.querySelector('.keyboard');
+
     keyboard?.addEventListener('mousedown', ({ target }) => {
+
+      // if (target.id === '8678' ) {
+      //   console.log(display.value.length);
+      //  console.log(x--)
+      //   display.setSelectionRange(x, x)
+      //   // display.focus()
+      // }
+
       if (target.id.length > 1) {
         switch (target.id) {
           case 'caps-lock':
@@ -27,10 +37,21 @@ const virtualKeyboardHandler = () => {
           case 'shift':
           case 'alt':
             return;
+          case 'arrowup':
+            display.value += '↑'
+            break;
+          case 'arrowdown':
+            display.value += '↓'
+            break;
+          case 'arrowleft':
+            display.value += '←'
+            break;
+          case 'arrowright':
+            display.value += '→'
+            break;
           default:
             return;
         }
-
       } else {
         display.value += target.textContent;
       }
