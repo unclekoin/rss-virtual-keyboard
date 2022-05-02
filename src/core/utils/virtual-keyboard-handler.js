@@ -1,52 +1,37 @@
-import { createApp } from '../../app';
-let isCapsLock = false;
-
-const virtualKeyboardHandler = () => {
-    const display = document.querySelector('.display');
-    const keyboard = document.querySelector('.keyboard');
-
+const virtualKeyboardHandler = (display, keyboard) => {
     keyboard?.addEventListener('mousedown', ({ target }) => {
-
-      // if (target.id === '8678' ) {
-      //   console.log(display.value.length);
-      //  console.log(x--)
-      //   display.setSelectionRange(x, x)
-      //   // display.focus()
-      // }
-
       if (target.id.length > 1) {
         switch (target.id) {
-          case 'caps-lock':
-            isCapsLock = !isCapsLock;
-            createApp(isCapsLock);
+          case 'CapsLock':
+            console.log('Caps Lock');
             break;
-          case 'space':
+          case 'Space':
             display.value += ' ';
             break;
-          case 'enter':
+          case 'Enter':
             display.value += '\n';
             break;
-          case 'tab':
+          case 'Tab':
             display.value += '\t';
             break;
-          case 'backspace':
-          case 'del':
+          case 'Backspace':
+          case 'Del':
             display.value = display.value.slice(0, display.value.length - 1);
             break;
           case 'ctrl':
           case 'shift':
           case 'alt':
             return;
-          case 'arrowup':
+          case 'ArrowUp':
             display.value += '↑'
             break;
-          case 'arrowdown':
+          case 'ArrowDown':
             display.value += '↓'
             break;
-          case 'arrowleft':
+          case 'ArrowLeft':
             display.value += '←'
             break;
-          case 'arrowright':
+          case 'ArrowRight':
             display.value += '→'
             break;
           default:

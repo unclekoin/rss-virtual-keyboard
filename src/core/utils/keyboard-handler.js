@@ -1,33 +1,38 @@
-const display = document.querySelector('.display');
+import { createApp } from '../../app';
 
-const keyboardHandler = () => {
+const keyboardHandler = (display) => {
+  const exceptions = ['ShiftRight', 'ControlRight', 'AltRight', 'Space'];
+
   document.addEventListener('keydown', (e) => {
-    if (e.code !== 'ShiftRight') {
-      document.getElementById(e.key.toLowerCase())?.classList.add('active');
-    } else {
-      document.getElementById(e.code.toLowerCase())?.classList.add('active');
+    let isShift = e.shiftKey;
+    let isUpper = e.shiftKey || e.getModifierState('CapsLock');
+    if (e.key === 'Shift' || e.key === 'CapsLock') createApp(null, isUpper, isShift);
+    if (e.key === 'Tab') {
+      display.value += '\t';
     }
 
-    // if(e.getModifierState("CapsLock")) {
-    //   const newData = data.en.map((item) => item.length > 1 ? item : item.toUpperCase())
-    //   app.innerHTML = ''
-    //   app.append(display(), keyboard(newData))
-    // } else {
-    //   const newData = data.ru.map((item) => item.length > 1 ? item.toLowerCase() : item)
-    //   app.innerHTML = ''
-    //   app.append(display(), keyboard(newData))
-    // }
-  })
+    if (exceptions.includes(e.code)) {
+      document.getElementById(e.code)?.classList.add('active');
+    } else {
+      const key = e.key === 'Control' ? 'Ctrl' : e.key;
+      document.getElementById(key)?.classList.add('active');
+    }
+  });
 
   document.addEventListener('keyup', (e) => {
+    let isShift = e.shiftKey;
+    let isUpper = e.shiftKey || e.getModifierState('CapsLock');
+    if (e.key === 'Shift' || e.key === 'CapsLock') createApp(null, isUpper, isShift);
     let button;
-
-    if (e.code !== 'ShiftRight') {
-      button = document.getElementById(e.key.toLowerCase())
-    } else  {
-      button = document.getElementById(e.code.toLowerCase())
+    display.focus();
+    if (exceptions.includes(e.code)) {
+      button = document.getElementById(e.code);
+    } else {
+      const key = e.key === 'Control' ? 'Ctrl' : e.key;
+      button = document.getElementById(key);
     }
     if (button) button.classList.remove('active');
-  })
-}
+  });
+};
+
 export default keyboardHandler;

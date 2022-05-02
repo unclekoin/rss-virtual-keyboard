@@ -1,3 +1,3 @@
-import display from './display';
+import Display from './display';
 
-export default display;
+export default Display;

@@ -1,6 +1,6 @@
 import Element from '../../core/classes/Element';
 
-const display = () => {
+const Display = () => {
   const element = new Element({
     tag: 'textarea',
     cls: ['display']
@@ -9,4 +9,4 @@ const display = () => {
   return element.element;
 }
 
-export default display;
+export default Display;

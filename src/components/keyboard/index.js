@@ -1,3 +1,3 @@
-import keyboard from './keyboard';
+import Keyboard from './keyboard';
 
-export default keyboard;
+export default Keyboard;
