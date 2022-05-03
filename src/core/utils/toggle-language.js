@@ -1,7 +1,3 @@
-import { createApp } from '../../app';
-
-export { createApp } from '../../app';
-
 const toggleLanguage = (keyboard) => {
   let isShift = false;
   let isSpace = false;

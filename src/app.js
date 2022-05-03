@@ -1,8 +1,7 @@
 import Element from './core/classes/Element';
+import Keyboard from './components/keyboard';
 import ThemeToggle from './components/theme-toggle';
 import Display from './components/display';
-import Keyboard from './components/keyboard';
-import virtualKeyboardHandler from './core/utils/virtual-keyboard-handler';
 import keyboardHandler from './core/utils/keyboard-handler';
 import toggleLanguage from './core/utils/toggle-language';
 
@@ -16,26 +15,28 @@ const container = new Element({
 
 const themeToggle = ThemeToggle();
 const display = Display();
-let keyboard;
+const keyboard = new Keyboard();
 
-app.append( themeToggle, container);
+keyboard.handler(display);
 
-export const createApp = (lang, isUpper, isShift) => {
-  keyboard = Keyboard(lang, isUpper, isShift);
+const createApp = (props) => {
+  keyboard.render(props);
   container.innerHTML = '';
-  container.append(display, keyboard);
-  virtualKeyboardHandler();
-}
-
-createApp('en', false, false)
+  container.append(themeToggle, display, keyboard.keyboard);
+  display.focus();
+};
 
 window.addEventListener('load', (e) => {
-  virtualKeyboardHandler(display, keyboard);
+  app.append(container);
+  createApp({
+    lang: 'en',
+    isUpper: false,
+    isShift: false
+  });
+  keyboardHandler(display, keyboard);
+  toggleLanguage(keyboard);
   display.focus();
-})
-
-keyboardHandler(display);
-toggleLanguage(keyboard);
+});
 
 
 export default app;

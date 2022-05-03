@@ -1,7 +1,7 @@
 .theme-toggle {
   position: absolute;
-  top: 3%;
-  right: 3%;
+  top: -6rem;
+  right: 0;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -19,7 +19,7 @@
 
   &__icon {
     font-size: 1.5rem;
-    color: $font-color;
+    color: rgba($font-color, 0.75);
   }
 }
 
