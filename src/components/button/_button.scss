@@ -23,6 +23,14 @@
     grid-column: span 4;
   }
 
+  &.backspace {
+    padding: 1rem 1.5rem;
+    font-size: 2.1rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
   &.second {
     grid-column: span 2;
   }

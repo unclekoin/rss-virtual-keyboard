@@ -2,7 +2,6 @@ import Element from './core/classes/Element';
 import Keyboard from './components/keyboard';
 import ThemeToggle from './components/theme-toggle';
 import Display from './components/display';
-import toggleLanguage from './core/utils/toggle-language';
 
 const app = new Element({
   cls: ['app']
@@ -19,8 +18,8 @@ const keyboard = new Keyboard(display);
 keyboard.virtualHandler();
 keyboard.physicalHandler();
 
-const createApp = (props) => {
-  keyboard.render(props);
+const createApp = () => {
+  keyboard.render();
   container.innerHTML = '';
   container.append(themeToggle, display, keyboard.keyboard);
   display.focus();
@@ -28,13 +27,7 @@ const createApp = (props) => {
 
 window.addEventListener('load', (e) => {
   app.append(container);
-  createApp({
-    lang: 'en',
-    isUpper: false,
-    isShift: false
-  });
-  // keyboardHandler(display, keyboard);
-  toggleLanguage(keyboard);
+  createApp();
   display.focus();
 });
 

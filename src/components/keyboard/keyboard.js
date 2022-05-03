@@ -71,6 +71,8 @@ class Keyboard {
           this.isUpper ? btn.classList.add('active') : btn.classList.remove('active');
         }
 
+        if (content === 'Backspace') btn.innerHTML = '&#9003;';
+
         if (content.length > 1) {
           btn.classList.add('btn-big', content.toLowerCase().split(' ').join('-'));
         }
@@ -107,8 +109,15 @@ class Keyboard {
             this.isShift = !target.className.includes('active');
             this.render();
             break;
-          case 'Ctrl':
           case 'Alt':
+            if (this.isShift) {
+              this.lang = this.lang === 'en' ? 'ru' : 'en';
+              this.render()
+            } else {
+              return;;
+            }
+            break;
+          case 'Ctrl':
             return;
           case 'ArrowUp':
             this.display.value += '↑';
