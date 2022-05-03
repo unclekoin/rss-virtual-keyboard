@@ -2,7 +2,6 @@ import Element from './core/classes/Element';
 import Keyboard from './components/keyboard';
 import ThemeToggle from './components/theme-toggle';
 import Display from './components/display';
-import keyboardHandler from './core/utils/keyboard-handler';
 import toggleLanguage from './core/utils/toggle-language';
 
 const app = new Element({
@@ -15,9 +14,10 @@ const container = new Element({
 
 const themeToggle = ThemeToggle();
 const display = Display();
-const keyboard = new Keyboard();
+const keyboard = new Keyboard(display);
 
-keyboard.handler(display);
+keyboard.virtualHandler();
+keyboard.physicalHandler();
 
 const createApp = (props) => {
   keyboard.render(props);
@@ -33,7 +33,7 @@ window.addEventListener('load', (e) => {
     isUpper: false,
     isShift: false
   });
-  keyboardHandler(display, keyboard);
+  // keyboardHandler(display, keyboard);
   toggleLanguage(keyboard);
   display.focus();
 });

@@ -3,25 +3,27 @@ import button from '../button';
 import data from '../../data/data.json';
 
 class Keyboard {
-  constructor() {
+  constructor(display) {
     this.element = new Element({ cls: ['keyboard'] }).element;
+    this.display = display;
     this.isUpper = false;
+    this.isShift = false;
+    this.lang = 'en';
   }
 
-  render({ lang, isUpper, isShift }) {
-    lang = 'en';
+  render() {
     this.element.innerHTML = '';
     let hasShift;
     let hasCtrl;
     let hasAlt;
 
-    const modifiedData = data['en'][isUpper ? 1 : 0];
+    const modifiedData = data[this.lang][this.isUpper ? 1 : 0];
     let set = modifiedData;
 
-    if (isShift) {
+    if (this.isShift) {
       set = [...data.spec, ...modifiedData.slice(13)];
       set[27] = '|';
-      if (lang === 'en') [set[25], set[26]] = ['{', '}'];
+      if (this.lang === 'en') [set[25], set[26]] = ['{', '}'];
     }
 
     set.forEach((content) => {
@@ -45,12 +47,15 @@ class Keyboard {
       } else {
         btn = button(content);
 
-
         if (content === 'Shift' && hasShift) {
           btn.id = 'ShiftRight';
           btn.classList.add('second');
+          this.isShift ? btn.classList.add('active') : btn.classList.remove('active');
         }
-        if (content === 'Shift') hasShift = true;
+        if (content === 'Shift') {
+          hasShift = true;
+          this.isShift ? btn.classList.add('active') : btn.classList.remove('active');
+        }
 
         if (content === 'Ctrl' && hasCtrl) {
           btn.id = 'ControlRight';
@@ -63,8 +68,7 @@ class Keyboard {
         if (content === 'Alt') hasAlt = true;
 
         if (content === 'Caps Lock') {
-          console.log(isUpper);
-          isUpper ? btn.classList.add('active') : btn.classList.remove('active');
+          this.isUpper ? btn.classList.add('active') : btn.classList.remove('active');
         }
 
         if (content.length > 1) {
@@ -76,8 +80,9 @@ class Keyboard {
     });
   }
 
-  handler(display) {
+  virtualHandler() {
     this.element.addEventListener('click', ({ target }) => {
+      if (target.className.includes('keyboard')) return;
       if (target.id.length > 1) {
         switch (target.id) {
           case 'CapsLock':
@@ -85,42 +90,86 @@ class Keyboard {
             this.render({ isUpper: this.isUpper });
             break;
           case 'Space':
-            display.value += ' ';
+            this.display.value += ' ';
             break;
           case 'Enter':
-            display.value += '\n';
+            this.display.value += '\n';
             break;
           case 'Tab':
-            display.value += '\t';
+            this.display.value += '\t';
             break;
           case 'Backspace':
           case 'Del':
-            display.value = display.value.slice(0, display.value.length - 1);
+            this.display.value = this.display.value.slice(0, this.display.value.length - 1);
             break;
-          case 'ctrl':
-          case 'shift':
-          case 'alt':
+          case 'Shift':
+          case 'ShiftRight':
+            this.isShift = !target.className.includes('active');
+            this.render();
+            break;
+          case 'Ctrl':
+          case 'Alt':
             return;
           case 'ArrowUp':
-            display.value += '↑';
+            this.display.value += '↑';
             break;
           case 'ArrowDown':
-            display.value += '↓';
+            this.display.value += '↓';
             break;
           case 'ArrowLeft':
-            display.value += '←';
+            this.display.value += '←';
             break;
           case 'ArrowRight':
-            display.value += '→';
+            this.display.value += '→';
             break;
           default:
             return;
         }
       } else {
-        display.value += target.textContent;
+        this.display.value += target.textContent;
       }
-      // display.focus();
+      this.display.focus();
     });
+  }
+
+  physicalHandler() {
+    const exceptions = ['ShiftRight', 'ControlRight', 'AltRight', 'Space'];
+
+    const keydownHandler = (e) => {
+      this.isShift = e.shiftKey;
+      this.isUpper = e.getModifierState('CapsLock');
+      if (e.key === 'Shift') this.render();
+      if (e.key === 'CapsLock') this.render();
+      if (e.key === 'Tab') {
+        this.display.value += '\t';
+      }
+
+      if (exceptions.includes(e.code)) {
+        document.getElementById(e.code)?.classList.add('active');
+      } else {
+        const key = e.key === 'Control' ? 'Ctrl' : e.key;
+        document.getElementById(key)?.classList.add('active');
+      }
+    };
+
+    const keyupHandler = (e) => {
+      this.isShift = e.shiftKey;
+      this.isUpper = e.getModifierState('CapsLock');
+      if (e.key === 'Shift') this.render();
+      if (e.key === 'CapsLock') this.render();
+      let button;
+      this.display.focus();
+      if (exceptions.includes(e.code)) {
+        button = document.getElementById(e.code);
+      } else {
+        const key = e.key === 'Control' ? 'Ctrl' : e.key;
+        button = document.getElementById(key);
+      }
+      if (button) button.classList.remove('active');
+    };
+
+    document.addEventListener('keydown', keydownHandler);
+    document.addEventListener('keyup', keyupHandler);
   }
 
   get keyboard() {
