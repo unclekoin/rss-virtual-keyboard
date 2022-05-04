@@ -17,7 +17,7 @@ class Keyboard {
     let hasCtrl;
     let hasAlt;
 
-    const modifiedData = data[this.lang][this.isUpper ? 1 : 0];
+    const modifiedData = data[this.lang];
     let set = modifiedData;
 
     if (this.isShift) {
@@ -44,8 +44,11 @@ class Keyboard {
             break;
         }
         btn.innerHTML = `&#${ content };`;
-      } else {
+      } else if (content.length > 1 && !content.includes('86')) {
         btn = button(content);
+        btn.classList.add('btn-big', content.toLowerCase().split(' ').join('-'));
+
+        if (content === 'Del') btn.id = 'Delete';
 
         if (content === 'Shift' && hasShift) {
           btn.id = 'ShiftRight';
@@ -72,9 +75,11 @@ class Keyboard {
         }
 
         if (content === 'Backspace') btn.innerHTML = '&#9003;';
-
-        if (content.length > 1) {
-          btn.classList.add('btn-big', content.toLowerCase().split(' ').join('-'));
+      } else {
+        if (this.isUpper) {
+          btn = button(content.toUpperCase());
+        } else {
+          btn = button(content);
         }
       }
 
