@@ -15,9 +15,6 @@ const themeToggle = ThemeToggle();
 const display = Display();
 const keyboard = new Keyboard(display);
 
-keyboard.virtualHandler();
-keyboard.physicalHandler();
-
 const createApp = () => {
   keyboard.render();
   container.innerHTML = '';

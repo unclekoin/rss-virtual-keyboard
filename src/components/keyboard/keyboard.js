@@ -8,7 +8,10 @@ class Keyboard {
     this.display = display;
     this.isUpper = false;
     this.isShift = false;
-    this.lang = 'en';
+    this.isAlt = false;
+    this.lang = localStorage.getItem('keyboardLanguage') || 'en'
+    this.virtualHandler();
+    this.physicalHandler();
   }
 
   render() {
@@ -16,6 +19,8 @@ class Keyboard {
     let hasShift;
     let hasCtrl;
     let hasAlt;
+
+    localStorage.setItem('keyboardLanguage', this.lang);
 
     const modifiedData = data[this.lang];
 
@@ -80,6 +85,8 @@ class Keyboard {
 
       this.element.append(btn);
     });
+
+    this.display.focus();
   }
 
   virtualHandler() {
@@ -88,6 +95,7 @@ class Keyboard {
       let end = this.display.selectionEnd;
 
       if (target.className.includes('keyboard')) return;
+
       if (target.id.length > 1) {
         switch (target.id) {
           case 'CapsLock':
@@ -132,7 +140,25 @@ class Keyboard {
           case 'Ctrl':
             return;
           case 'ArrowUp':
-            this.display.value += '↑';
+            const array = this.display.value.split('\n')
+            let subStringsLength = 0;
+            let rowIndex = 0;
+            let pos = start - (array.length - 1);
+
+            for (let i = 0; i < array.length; i++) {
+              subStringsLength += array[i].length;
+
+              if (subStringsLength >= pos) {
+                rowIndex = i;
+              }
+            }
+            const cursorPos = pos - (subStringsLength - array[rowIndex].length);
+            const newPos = cursorPos <= array[rowIndex - 1].length
+              ? subStringsLength - array[rowIndex].length - array[rowIndex - 1].length + cursorPos + 1
+              : subStringsLength - array[rowIndex].length + 1;
+
+            this.display.setSelectionRange(newPos > 0 ? newPos : 0, newPos > 0 ? newPos : 0);
+            // this.display.value += '↑';
             break;
           case 'ArrowDown':
             this.display.value += '↓';
@@ -160,9 +186,16 @@ class Keyboard {
 
     const keydownHandler = (e) => {
       this.isShift = e.shiftKey;
+      this.isAlt = e.altKey;
       this.isUpper = e.getModifierState('CapsLock');
       if (e.key === 'Shift') this.render();
       if (e.key === 'CapsLock') this.render();
+
+      if (this.isAlt && this.isShift) {
+        this.lang = this.lang === 'en' ? 'ru' : 'en';
+        this.render();
+      }
+
       if (e.key === 'Tab') {
         this.display.value += '\t';
       }
