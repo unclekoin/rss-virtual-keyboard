@@ -18,15 +18,8 @@ class Keyboard {
     let hasAlt;
 
     const modifiedData = data[this.lang];
-    let set = modifiedData;
 
-    if (this.isShift) {
-      set = [...data.spec, ...modifiedData.slice(13)];
-      set[27] = '|';
-      if (this.lang === 'en') [set[25], set[26]] = ['{', '}'];
-    }
-
-    set.forEach((content) => {
+    modifiedData.forEach((content) => {
       let btn;
       if (content.includes('86')) {
         switch (content) {
@@ -44,7 +37,7 @@ class Keyboard {
             break;
         }
         btn.innerHTML = `&#${ content };`;
-      } else if (content.length > 1 && !content.includes('86')) {
+      } else if (content.length > 1 && !content.includes('86') && !Array.isArray(content)) {
         btn = button(content);
         btn.classList.add('btn-big', content.toLowerCase().split(' ').join('-'));
 
@@ -76,10 +69,12 @@ class Keyboard {
 
         if (content === 'Backspace') btn.innerHTML = '&#9003;';
       } else {
+        const data = Array.isArray(content) ? content[this.isShift ? 1 : 0] : content;
+
         if (this.isUpper) {
-          btn = button(content.toUpperCase());
+          btn = button(data.toUpperCase());
         } else {
-          btn = button(content);
+          btn = button(data);
         }
       }
 
@@ -89,6 +84,9 @@ class Keyboard {
 
   virtualHandler() {
     this.element.addEventListener('click', ({ target }) => {
+      let start = this.display.selectionStart;
+      let end = this.display.selectionEnd;
+
       if (target.className.includes('keyboard')) return;
       if (target.id.length > 1) {
         switch (target.id) {
@@ -106,8 +104,17 @@ class Keyboard {
             this.display.value += '\t';
             break;
           case 'Backspace':
-          case 'Del':
-            this.display.value = this.display.value.slice(0, this.display.value.length - 1);
+            const offset = start === end && start ? start - 1 : start
+            this.display.value =
+              this.display.value.slice(0, offset) +
+              this.display.value.slice(end);
+            this.display.setSelectionRange(offset, offset);
+            break;
+          case 'Delete':
+            this.display.value =
+              this.display.value.slice(0, start) +
+              this.display.value.slice(end === start ? end + 1 : end);
+            this.display.setSelectionRange(start, start);
             break;
           case 'Shift':
           case 'ShiftRight':
@@ -117,9 +124,9 @@ class Keyboard {
           case 'Alt':
             if (this.isShift) {
               this.lang = this.lang === 'en' ? 'ru' : 'en';
-              this.render()
+              this.render();
             } else {
-              return;;
+              return;
             }
             break;
           case 'Ctrl':
@@ -131,16 +138,18 @@ class Keyboard {
             this.display.value += '↓';
             break;
           case 'ArrowLeft':
-            this.display.value += '←';
+            if (start) start--;
+            this.display.setSelectionRange(start, start);
             break;
           case 'ArrowRight':
-            this.display.value += '→';
+            start++;
+            this.display.setSelectionRange(start, start);
             break;
           default:
             return;
         }
       } else {
-        this.display.value += target.textContent;
+        this.display.value += target.id;
       }
       this.display.focus();
     });
