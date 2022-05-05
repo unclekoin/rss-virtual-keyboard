@@ -152,10 +152,11 @@ class Keyboard {
             this.display.setSelectionRange(newPosition, newPosition);
             break;
           case 'ArrowDown':
-            newPosition = array[rowIndex + 1]
+            newPosition = array[rowIndex + 1] && colIndex <= array[rowIndex + 1].length
               ? start + (array[rowIndex].length + 1)
               : displayLength;
-            if (colIndex > array[rowIndex + 1]?.length && newPosition < displayLength) {
+
+            if (array[rowIndex + 1] && colIndex > array[rowIndex + 1].length) {
               newPosition = start + (array[rowIndex].length - colIndex) + array[rowIndex + 1].length + 1;
             }
             this.display.setSelectionRange(newPosition, newPosition);
