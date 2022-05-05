@@ -14,5 +14,5 @@ export const calculatePosition = (start, value) => {
 
   const colIndex = start - (itemsLength - array[rowIndex].length + rowIndex);
 
-  return {array, rowIndex, colIndex};
+  return {array, rowIndex, colIndex, displayLength: value.length};
 }

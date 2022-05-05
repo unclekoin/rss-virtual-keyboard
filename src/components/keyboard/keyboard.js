@@ -94,7 +94,8 @@ class Keyboard {
     this.element.addEventListener('click', ({ target }) => {
       let start = this.display.selectionStart;
       let end = this.display.selectionEnd;
-      const { colIndex, rowIndex, array } = calculatePosition(start, this.display.value);
+      let newPosition = 0;
+      const { colIndex, rowIndex, array, displayLength } = calculatePosition(start, this.display.value);
 
       if (target.className.includes('keyboard')) return;
 
@@ -142,12 +143,22 @@ class Keyboard {
           case 'Ctrl':
             return;
           case 'ArrowUp':
-            let newPos = array[rowIndex - 1] ? start - (array[rowIndex - 1].length + 1) : 0;
-            if (colIndex > array[rowIndex - 1]?.length && newPos) newPos = start - colIndex - 1;
-            this.display.setSelectionRange(newPos, newPos);
+            newPosition = array[rowIndex - 1]
+              ? start - (array[rowIndex - 1].length + 1)
+              : 0;
+            if (colIndex > array[rowIndex - 1]?.length && newPosition) {
+              newPosition = start - colIndex - 1;
+            }
+            this.display.setSelectionRange(newPosition, newPosition);
             break;
           case 'ArrowDown':
-            this.display.value += '↓';
+            newPosition = array[rowIndex + 1]
+              ? start + (array[rowIndex].length + 1)
+              : displayLength;
+            if (colIndex > array[rowIndex + 1]?.length && newPosition < displayLength) {
+              newPosition = start + (array[rowIndex].length - colIndex) + array[rowIndex + 1].length + 1;
+            }
+            this.display.setSelectionRange(newPosition, newPosition);
             break;
           case 'ArrowLeft':
             if (start) start--;
