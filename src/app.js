@@ -3,7 +3,7 @@ import Keyboard from './components/keyboard';
 import ThemeToggle from './components/theme-toggle';
 import Display from './components/display';
 
-const app = new Element({
+const App = new Element({
   cls: ['app']
 }).element;
 
@@ -23,10 +23,9 @@ const createApp = () => {
 };
 
 window.addEventListener('load', (e) => {
-  app.append(container);
+  App.append(container);
   createApp();
   display.focus();
 });
 
-
-export default app;
+export default App;
