@@ -1,6 +1,7 @@
 import Element from '../../core/classes/Element';
 import button from '../button';
 import data from '../../data/data.json';
+import { calculatePosition } from '../../core/utils/calculate-position';
 
 class Keyboard {
   constructor(display) {
@@ -9,7 +10,7 @@ class Keyboard {
     this.isUpper = false;
     this.isShift = false;
     this.isAlt = false;
-    this.lang = localStorage.getItem('keyboardLanguage') || 'en'
+    this.lang = localStorage.getItem('keyboardLanguage') || 'en';
     this.virtualHandler();
     this.physicalHandler();
   }
@@ -93,6 +94,7 @@ class Keyboard {
     this.element.addEventListener('click', ({ target }) => {
       let start = this.display.selectionStart;
       let end = this.display.selectionEnd;
+      const { colIndex, rowIndex, array } = calculatePosition(start, this.display.value);
 
       if (target.className.includes('keyboard')) return;
 
@@ -112,7 +114,7 @@ class Keyboard {
             this.display.value += '\t';
             break;
           case 'Backspace':
-            const offset = start === end && start ? start - 1 : start
+            const offset = start === end && start ? start - 1 : start;
             this.display.value =
               this.display.value.slice(0, offset) +
               this.display.value.slice(end);
@@ -140,25 +142,9 @@ class Keyboard {
           case 'Ctrl':
             return;
           case 'ArrowUp':
-            const array = this.display.value.split('\n')
-            let subStringsLength = 0;
-            let rowIndex = 0;
-            let pos = start - (array.length - 1);
-
-            for (let i = 0; i < array.length; i++) {
-              subStringsLength += array[i].length;
-
-              if (subStringsLength >= pos) {
-                rowIndex = i;
-              }
-            }
-            const cursorPos = pos - (subStringsLength - array[rowIndex].length);
-            const newPos = cursorPos <= array[rowIndex - 1].length
-              ? subStringsLength - array[rowIndex].length - array[rowIndex - 1].length + cursorPos + 1
-              : subStringsLength - array[rowIndex].length + 1;
-
-            this.display.setSelectionRange(newPos > 0 ? newPos : 0, newPos > 0 ? newPos : 0);
-            // this.display.value += '↑';
+            let newPos = array[rowIndex - 1] ? start - (array[rowIndex - 1].length + 1) : 0;
+            if (colIndex > array[rowIndex - 1]?.length && newPos) newPos = start - colIndex - 1;
+            this.display.setSelectionRange(newPos, newPos);
             break;
           case 'ArrowDown':
             this.display.value += '↓';
