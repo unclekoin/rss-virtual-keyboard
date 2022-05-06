@@ -2,18 +2,49 @@
   grid-column: span 2;
   color: $font-color;
   background-color: $button-background;
-  border-radius: 20%;
+  border-radius: 10%;
   box-shadow: 3px 3px 7px $dark-shadow, -3px -3px 7px $light-shadow;
   transition: all 0.2s linear;
   cursor: pointer;
 
+  @include respond(md) {
+    font-size: 1.6rem;
+    box-shadow: 2px 2px 3px $dark-shadow, -2px -2px 3px $light-shadow;
+  }
+
+  @include respond(sm) {
+    font-size: 1rem;
+    box-shadow: 1.5px 1.5px 3px $dark-shadow, -1.5px -1.5px 3px $light-shadow;
+  }
+
   &.active,
   &:active {
     box-shadow: 1px 1px 2px $active-light-shadow, -1px -1px 2px $active-dark-shadow;
+
+    @include respond(sm) {
+      box-shadow: 0.5px 0.5px 2px $active-light-shadow, -0.2px -0.2px 1px $active-dark-shadow;
+    }
   }
 
   &-big {
-    border-radius: 10px;
+    border-radius: 5px;
+
+    @include respond(xl) {
+      font-size: 1.8rem;
+    }
+
+    @include respond(lg) {
+      font-size: 1.6rem;
+    }
+
+    @include respond(md) {
+      font-size: 1.2rem;
+    }
+
+    @include respond(sm) {
+      font-size: 0.8rem;
+      border-radius: 2px;
+    }
   }
 
   &.backspace,
@@ -29,6 +60,21 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+
+    @include respond(xl) {
+      padding: 0.5rem 1rem;
+      font-size: 1.8rem;
+    }
+
+    @include respond(md) {
+      padding: 0.3rem 0.7rem;
+      font-size: 1.4rem;
+    }
+
+    @include respond(sm) {
+      padding: 0.2rem 0.5rem;
+      font-size: 1rem;
+    }
   }
 
   &.second {
@@ -49,6 +95,14 @@
   color: #D7D7D8;
   background-color: #27292B;
   box-shadow: 3px 3px 7px #0A0A0A, -3px -3px 7px #858383;
+
+  @include respond(md) {
+    box-shadow: 1px 1px 5px #0A0A0A, -1px -1px 3px #858383;
+  }
+
+  @include respond(sm) {
+    box-shadow: 1px 1px 3px #0A0A0A, -1px -1px 2px #858383;
+  }
 
   &.active,
   &:active {

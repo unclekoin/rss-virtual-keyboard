@@ -13,18 +13,38 @@
   justify-content: center;
   align-items: center;
 
+  @include respond(md) {
+    top: -3rem;
+    width: 2rem;
+    height: 2rem;
+    box-shadow: 1px 1px 3px $dark-shadow, -1px -1px 5px $light-shadow;
+  }
+
   &:active {
     box-shadow: 1px 1px 2px $active-light-shadow, -1px -1px 2px $active-dark-shadow;
   }
 
   &__icon {
+    position: absolute;
     font-size: 1.75rem;
     transform: translate(1px, 1px) rotate(-25deg);
+
+    @include respond(md) {
+      transform: translate(0, 0) rotate(-25deg);
+    }
+
+    @include respond(md) {
+      font-size: 1.2rem;
+    }
   }
 }
 
 .theme .theme-toggle {
   box-shadow: 2px 2px 7px #0A0A0A, -2px -2px 7px #858383;
+
+  @include respond(md) {
+    box-shadow: 1px 1px 5px #0A0A0A, -1px -1px 3px #858383;
+  }
 
   &:active {
     box-shadow: 1px 1px 2px #858383, -1px -1px 2px #0A0A0A;

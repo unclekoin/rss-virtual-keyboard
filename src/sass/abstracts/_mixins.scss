@@ -1,25 +1,17 @@
-// MEDIA QUERY MANAGER
-/*
-600px > :      phone
-600 - 900px:   tablet portrait
-900 - 1200px:  tablet landscape
-1200 - 1800px: desktop (normal styles)
-1800px < :     big desktop
-ORDER: base + typography > general layout + grid > page layout > components
-1em = 16px
-*/
-
 @mixin respond($breakpoint) {
-  @if $breakpoint == phone {
-    @media only screen and (max-width: 37.5em) { @content } // 600px
+  @if $breakpoint == sm {
+    @media only screen and (max-width: 576px) { @content }
   }
-  @if $breakpoint == tablet-portrait {
-    @media only screen and (max-width: 56.25em) { @content } // 900px
+  @if $breakpoint == md {
+    @media only screen and (max-width: 768px) { @content }
   }
-  @if $breakpoint == tablet-landscape {
-    @media only screen and (max-width: 75em) { @content } // 1200px
+  @if $breakpoint == lg {
+    @media only screen and (max-width: 992px) { @content }
   }
-  @if $breakpoint == big-desktop {
-    @media only screen and (min-width: 112.5em) { @content } // 1800px
+  @if $breakpoint == xl {
+    @media only screen and (max-width: 1200px) { @content }
+  }
+  @if $breakpoint == xxl {
+    @media only screen and (min-width: 1400px) { @content }
   }
 }

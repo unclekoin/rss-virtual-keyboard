@@ -11,6 +11,23 @@
   box-shadow: inset 3px 3px 5px $dark-shadow, inset -2px -2px 5px $light-shadow;
   outline: none;
   resize: none;
+
+  @include respond(md) {
+    height: 10rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    box-shadow: inset 2px 2px 4px $dark-shadow, inset -2px -2px 4px $light-shadow;
+  }
+
+  @include respond(md) {
+    height: 7rem;
+    margin-bottom: 1.2rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    box-shadow: inset 1px 1px 3px $dark-shadow, inset -1px -1px 3px $light-shadow;
+  }
 }
 
 .theme .display {
@@ -18,4 +35,8 @@
   background-color: #313336;
   box-shadow: inset 3px 3px 5px #0A0A0A, inset -2px -2px 5px #858383;
   caret-color: #D7D7D8;
+
+  @include respond(md) {
+    box-shadow: inset 2px 2px 4px #0A0A0A, inset -1px -1px 3px #858383;
+  }
 }

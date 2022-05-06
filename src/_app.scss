@@ -2,9 +2,13 @@
   background-color: $background;
   width: 100%;
   min-height: 100vh;
-  padding: 10rem 0;
+  padding: 10rem 1rem;
   display: grid;
   place-items: center;
+
+  @include respond(sm) {
+    padding: 2rem 0.5rem;
+  }
 
   &.theme {
     background-color: #313336;
