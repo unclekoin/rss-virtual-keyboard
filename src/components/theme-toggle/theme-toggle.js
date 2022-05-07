@@ -1,26 +1,22 @@
 import Element from '../../core/classes/Element';
 
 const ThemeToggle = () => {
+  let isLight = true;
+
   const element = new Element({
     tag: 'button',
     cls: ['theme-toggle']
   }).element;
 
-  const icon = new Element({
-    tag: 'span',
-    cls: ['theme-toggle__icon']
-  }).element;
-
-  icon.innerHTML = '&#9788;';
-  element.append(icon);
-
-  let isLight = true;
+  element.innerHTML = '<i class="bi bi-brightness-high theme-toggle__icon"></i>';
 
   element.addEventListener('click', () => {
     const app = document.querySelector('.app');
     app.classList.toggle('theme');
     isLight = !isLight
-    icon.innerHTML = isLight ? '&#9788;' : '&#9790;';
+    element.innerHTML = isLight
+      ? '<i class="bi bi-brightness-high theme-toggle__icon"></i>'
+      : '<i class="bi bi-moon-fill theme-toggle__icon"></i>';
   })
 
   return element;

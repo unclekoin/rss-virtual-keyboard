@@ -53,6 +53,14 @@
     display: inline-block;
     margin-bottom: 1rem;
   }
+
+  & code {
+    display: inline-block;
+    margin-bottom: 1px;
+    padding: 0.1rem 0.7rem 0.2rem;
+    border-radius: 0.5rem;
+    background-color: #C3C0C0;
+  }
 }
 
 .popup-close {

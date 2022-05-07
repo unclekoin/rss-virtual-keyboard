@@ -25,13 +25,8 @@
   }
 
   &__icon {
-    position: absolute;
+    color: $font-color;
     font-size: 1.75rem;
-    transform: translate(1px, 1px) rotate(-25deg);
-
-    @include respond(md) {
-      transform: translate(0, 0) rotate(-25deg);
-    }
 
     @include respond(md) {
       font-size: 1.2rem;

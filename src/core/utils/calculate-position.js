@@ -1,3 +1,5 @@
+let tmp = 0;
+
 export const calculatePosition = (start, value) => {
   const array = value.split('\n');
   let itemsLength = 0;
@@ -12,7 +14,8 @@ export const calculatePosition = (start, value) => {
     }
   }
 
-  const colIndex = start - (itemsLength - array[rowIndex].length + rowIndex);
+  let colIndex = start - (itemsLength - array[rowIndex].length + rowIndex);
 
-  return {array, rowIndex, colIndex, displayLength: value.length};
-}
+  return { array, rowIndex, colIndex, displayLength: value.length };
+
+};

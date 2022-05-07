@@ -4,9 +4,11 @@ const Display = () => {
   const element = new Element({
     tag: 'textarea',
     cls: ['display']
-  })
+  }).element
 
-  return element.element;
+  element.setAttribute('inputmode', 'none');
+
+  return element;
 }
 
 export default Display;

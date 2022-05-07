@@ -6,6 +6,8 @@
   display: grid;
   place-items: center;
 
+  touch-action: manipulation;
+
   @include respond(sm) {
     padding: 2rem 0.5rem;
   }

@@ -11,6 +11,8 @@
   box-shadow: inset 3px 3px 5px $dark-shadow, inset -2px -2px 5px $light-shadow;
   outline: none;
   resize: none;
+  caret-color: $font-color;
+  background-clip: padding-box;
 
   @include respond(md) {
     height: 10rem;

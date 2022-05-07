@@ -10,6 +10,7 @@ class Keyboard {
     this.isUpper = false;
     this.isShift = false;
     this.isAlt = false;
+    this.prevPosition = 0;
     this.lang = localStorage.getItem('keyboardLanguage') || 'en';
     this.virtualHandler();
     this.physicalHandler();
@@ -73,7 +74,7 @@ class Keyboard {
           this.isUpper ? btn.classList.add('active') : btn.classList.remove('active');
         }
 
-        if (content === 'Backspace') btn.innerHTML = '&#9003;';
+        if (content === 'Backslash') btn.innerHTML = '\\';
       } else {
         const data = Array.isArray(content) ? content[this.isShift ? 1 : 0] : content;
 
@@ -86,12 +87,11 @@ class Keyboard {
 
       this.element.append(btn);
     });
-
-    this.display.focus();
   }
 
   virtualHandler() {
     this.element.addEventListener('click', ({ target }) => {
+      this.isArrow = false;
       let start = this.display.selectionStart;
       let end = this.display.selectionEnd;
       let newPosition = 0;
@@ -140,34 +140,52 @@ class Keyboard {
               return;
             }
             break;
+          case 'Backslash':
+            this.display.value += '\\';
+            break;
           case 'Ctrl':
             return;
           case 'ArrowUp':
-            newPosition = array[rowIndex - 1]
-              ? start - (array[rowIndex - 1].length + 1)
-              : 0;
-            if (colIndex > array[rowIndex - 1]?.length && newPosition) {
+            if (colIndex || array[rowIndex]) this.prevPosition = colIndex;
+            if (array[rowIndex - 1] === '') {
               newPosition = start - colIndex - 1;
+            } else if (!colIndex && array[rowIndex - 1] !== undefined) {
+              newPosition = this.prevPosition > array[rowIndex - 1].length
+                ? start - 1
+                : start - array[rowIndex - 1].length - 1 + this.prevPosition;
+            } else {
+              if (array[rowIndex - 1] && array[rowIndex - 1].length >= array[rowIndex].length) {
+                newPosition = start - (array[rowIndex].length + 1) - (array[rowIndex - 1].length - array[rowIndex].length);
+              } else {
+                newPosition = colIndex > array[rowIndex - 1]?.length
+                  ? start - colIndex - 1
+                  : start - (array[rowIndex - 1]?.length + 1);
+              }
             }
             this.display.setSelectionRange(newPosition, newPosition);
             break;
           case 'ArrowDown':
-            newPosition = array[rowIndex + 1] && colIndex <= array[rowIndex + 1].length
+            newPosition = array[rowIndex + 1] !== undefined && colIndex <= array[rowIndex + 1].length
               ? start + (array[rowIndex].length + 1)
               : displayLength;
 
-            if (array[rowIndex + 1] && colIndex > array[rowIndex + 1].length) {
+            if (array[rowIndex + 1] !== undefined && colIndex > array[rowIndex + 1].length) {
               newPosition = start + (array[rowIndex].length - colIndex) + array[rowIndex + 1].length + 1;
             }
+
+            if (!array[rowIndex]) newPosition = start + this.prevPosition + 1;
             this.display.setSelectionRange(newPosition, newPosition);
+            if (colIndex) this.prevPosition = colIndex;
             break;
           case 'ArrowLeft':
             if (start) start--;
             this.display.setSelectionRange(start, start);
+            if (colIndex) this.prevPosition = colIndex;
             break;
           case 'ArrowRight':
             start++;
             this.display.setSelectionRange(start, start);
+            if (colIndex) this.prevPosition = colIndex;
             break;
           default:
             return;
@@ -183,9 +201,11 @@ class Keyboard {
     const exceptions = ['ShiftRight', 'ControlRight', 'AltRight', 'Space'];
 
     const keydownHandler = (e) => {
+      this.display.focus();
       this.isShift = e.shiftKey;
       this.isAlt = e.altKey;
       this.isUpper = e.getModifierState('CapsLock');
+
       if (e.key === 'Shift') this.render();
       if (e.key === 'CapsLock') this.render();
 
@@ -196,6 +216,10 @@ class Keyboard {
 
       if (e.key === 'Tab') {
         this.display.value += '\t';
+      }
+
+      if (e.code === 'Backslash' && !this.isShift) {
+        document.getElementById(e.code)?.classList.add('active');
       }
 
       if (exceptions.includes(e.code)) {
@@ -209,10 +233,16 @@ class Keyboard {
     const keyupHandler = (e) => {
       this.isShift = e.shiftKey;
       this.isUpper = e.getModifierState('CapsLock');
+
       if (e.key === 'Shift') this.render();
       if (e.key === 'CapsLock') this.render();
+
       let button;
-      this.display.focus();
+
+      if (e.code === 'Backslash' && !this.isShift) {
+        document.getElementById(e.code)?.classList.remove('active');
+      }
+
       if (exceptions.includes(e.code)) {
         button = document.getElementById(e.code);
       } else {
