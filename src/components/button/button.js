@@ -5,11 +5,10 @@ const Button = (content) => {
     tag: 'button',
     cls: ['btn', 'btn-primary'],
     id: content.split(' ').join(''),
-    content
-  })
+    content,
+  });
 
   return btn.element;
-}
+};
 
 export default Button;
-

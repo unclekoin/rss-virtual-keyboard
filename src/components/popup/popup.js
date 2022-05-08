@@ -1,10 +1,10 @@
 import Element from '../../core/classes/Element';
 
 const Popup = () => {
-  const element = new Element({
+  const { element } = new Element({
     tag: 'div',
-    cls: ['popup']
-  }).element;
+    cls: ['popup'],
+  });
 
   const content = `
     <div>

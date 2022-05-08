@@ -3,7 +3,7 @@ import App from './app';
 import Overlay from './components/overlay';
 import Popup from './components/popup';
 
-const body = document.body;
+const { body } = document;
 const overlay = Overlay();
 const popup = Popup();
 const btn = popup.querySelector('.popup__btn');

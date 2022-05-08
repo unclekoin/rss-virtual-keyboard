@@ -1,10 +1,10 @@
 import Element from '../../core/classes/Element';
 
 const Overlay = () => {
-  const element = new Element({
+  const { element } = new Element({
     tag: 'div',
-    cls: ['overlay']
-  }).element;
+    cls: ['overlay'],
+  });
 
   return element;
 };

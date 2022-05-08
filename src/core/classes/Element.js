@@ -1,16 +1,20 @@
 export default class Element {
   #element;
-  #tag;
-  #cls;
-  #content;
-  #id;
 
-  constructor({ tag = 'div', cls = [], content = '', id = null }) {
+  #tag;
+
+  #cls;
+
+  #content;
+
+  constructor({
+    tag = 'div', cls = [], content = '', id = null,
+  }) {
     this.#element = null;
     this.#tag = tag;
-    this.#cls = cls
+    this.#cls = cls;
     this.#content = content;
-    this.#id = id;
+    this.id = id;
     this.create();
   }
 
@@ -22,7 +26,7 @@ export default class Element {
     const element = document.createElement(this.#tag);
     element.classList.add(...this.#cls);
     if (this.#content) element.textContent = this.#content;
-    if (this.#id) element.id = this.#id;
+    if (this.id) element.id = this.id;
     this.#element = element;
   }
 }

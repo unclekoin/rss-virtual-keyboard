@@ -42,8 +42,10 @@ class Keyboard {
           case '8680':
             btn = button('ArrowRight');
             break;
+          default:
+            return;
         }
-        btn.innerHTML = `&#${ content };`;
+        btn.innerHTML = `&#${content};`;
       } else if (content.length > 1 && !content.includes('86') && !Array.isArray(content)) {
         btn = button(content);
         btn.classList.add('btn-big', content.toLowerCase().split(' ').join('-'));
@@ -53,11 +55,19 @@ class Keyboard {
         if (content === 'Shift' && hasShift) {
           btn.id = 'ShiftRight';
           btn.classList.add('second');
-          this.isShift ? btn.classList.add('active') : btn.classList.remove('active');
+          if (this.isShift) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
         }
         if (content === 'Shift') {
           hasShift = true;
-          this.isShift ? btn.classList.add('active') : btn.classList.remove('active');
+          if (this.isShift) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
         }
 
         if (content === 'Ctrl' && hasCtrl) {
@@ -71,17 +81,21 @@ class Keyboard {
         if (content === 'Alt') hasAlt = true;
 
         if (content === 'Caps Lock') {
-          this.isUpper ? btn.classList.add('active') : btn.classList.remove('active');
+          if (this.isUpper) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
         }
 
         if (content === 'Backslash') btn.innerHTML = '\\';
       } else {
-        const data = Array.isArray(content) ? content[this.isShift ? 1 : 0] : content;
+        const symbol = Array.isArray(content) ? content[this.isShift ? 1 : 0] : content;
 
         if (this.isUpper) {
-          btn = button(data.toUpperCase());
+          btn = button(symbol.toUpperCase());
         } else {
-          btn = button(data);
+          btn = button(symbol);
         }
       }
 
@@ -93,9 +107,9 @@ class Keyboard {
     this.element.addEventListener('click', ({ target }) => {
       this.isArrow = false;
       let start = this.display.selectionStart;
-      let end = this.display.selectionEnd;
+      const end = this.display.selectionEnd;
       let newPosition = 0;
-      const { colIndex, rowIndex, array, displayLength } = calculatePosition(start, this.display.value);
+      const { colIndex, rowIndex, array } = calculatePosition(start, this.display.value);
       if (colIndex || array[rowIndex]) this.prevPosition = colIndex;
 
       if (target.className.includes('keyboard')) return;
@@ -116,16 +130,15 @@ class Keyboard {
             this.display.value += '\t';
             break;
           case 'Backspace':
+            /* eslint-disable no-case-declarations */
             const offset = start === end && start ? start - 1 : start;
-            this.display.value =
-              this.display.value.slice(0, offset) +
-              this.display.value.slice(end);
+            this.display.value = this.display.value.slice(0, offset)
+              + this.display.value.slice(end);
             this.display.setSelectionRange(offset, offset);
             break;
           case 'Delete':
-            this.display.value =
-              this.display.value.slice(0, start) +
-              this.display.value.slice(end === start ? end + 1 : end);
+            this.display.value = this.display.value.slice(0, start)
+              + this.display.value.slice(end === start ? end + 1 : end);
             this.display.setSelectionRange(start, start);
             break;
           case 'Shift':
@@ -153,14 +166,14 @@ class Keyboard {
               newPosition = this.prevPosition > array[rowIndex - 1].length
                 ? start - 1
                 : start - array[rowIndex - 1].length - 1 + this.prevPosition;
+            } else if (array[rowIndex - 1] && array[rowIndex - 1].length >= array[rowIndex].length) {
+              newPosition = start - (array[rowIndex].length + 1)
+                - (array[rowIndex - 1].length - array[rowIndex].length);
             } else {
-              if (array[rowIndex - 1] && array[rowIndex - 1].length >= array[rowIndex].length) {
-                newPosition = start - (array[rowIndex].length + 1) - (array[rowIndex - 1].length - array[rowIndex].length);
-              } else {
-                newPosition = colIndex > array[rowIndex - 1]?.length
-                  ? start - colIndex - 1
-                  : start - (array[rowIndex - 1]?.length + 1);
-              }
+              newPosition = colIndex > array[rowIndex - 1]?.length
+                ? start - colIndex - 1
+                /* eslint-disable no-unsafe-optional-chaining */
+                : start - (array[rowIndex - 1]?.length + 1);
             }
             this.display.setSelectionRange(newPosition, newPosition);
             break;
@@ -175,12 +188,10 @@ class Keyboard {
                   ? start + array[rowIndex + 1] + 1
                   : start + this.prevPosition + 1;
               }
+            } else if (colIndex >= array[rowIndex + 1]?.length) {
+              newPosition = start + array[rowIndex + 1].length - array[rowIndex].length - colIndex;
             } else {
-              if (colIndex >= array[rowIndex + 1]?.length) {
-                newPosition = start + array[rowIndex + 1].length - array[rowIndex].length - colIndex;
-              } else {
-                newPosition = start + (array[rowIndex].length - colIndex) + colIndex + 1;
-              }
+              newPosition = start + (array[rowIndex].length - colIndex) + colIndex + 1;
             }
 
             this.display.setSelectionRange(newPosition, newPosition);
@@ -243,19 +254,19 @@ class Keyboard {
       if (e.key === 'Shift') this.render();
       if (e.key === 'CapsLock') this.render();
 
-      let button;
+      let btn;
 
       if (e.code === 'Backslash' && !this.isShift) {
         document.getElementById(e.code)?.classList.remove('active');
       }
 
       if (exceptions.includes(e.code)) {
-        button = document.getElementById(e.code);
+        btn = document.getElementById(e.code);
       } else {
         const key = e.key === 'Control' ? 'Ctrl' : e.key;
-        button = document.getElementById(key);
+        btn = document.getElementById(key);
       }
-      if (button) button.classList.remove('active');
+      if (btn) btn.classList.remove('active');
     };
 
     document.addEventListener('keydown', keydownHandler);

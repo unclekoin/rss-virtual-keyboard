@@ -4,11 +4,11 @@ import ThemeToggle from './components/theme-toggle';
 import Display from './components/display';
 
 const App = new Element({
-  cls: ['app']
+  cls: ['app'],
 }).element;
 
 const container = new Element({
-  cls: ['container']
+  cls: ['container'],
 }).element;
 
 const themeToggle = ThemeToggle();
@@ -22,7 +22,7 @@ const createApp = () => {
   display.focus();
 };
 
-window.addEventListener('load', (e) => {
+window.addEventListener('load', () => {
   App.append(container);
   createApp();
   display.focus();

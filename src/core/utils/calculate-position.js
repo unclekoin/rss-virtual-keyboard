@@ -12,7 +12,9 @@ export const calculatePosition = (start, value) => {
     }
   }
 
-  let colIndex = start - (itemsLength - array[rowIndex].length + rowIndex);
+  const colIndex = start - (itemsLength - array[rowIndex].length + rowIndex);
 
-  return { array, rowIndex, colIndex, displayLength: value.length };
+  return {
+    array, rowIndex, colIndex, displayLength: value.length,
+  };
 };
