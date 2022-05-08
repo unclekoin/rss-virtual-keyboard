@@ -96,6 +96,7 @@ class Keyboard {
       let end = this.display.selectionEnd;
       let newPosition = 0;
       const { colIndex, rowIndex, array, displayLength } = calculatePosition(start, this.display.value);
+      if (colIndex || array[rowIndex]) this.prevPosition = colIndex;
 
       if (target.className.includes('keyboard')) return;
 
@@ -146,7 +147,6 @@ class Keyboard {
           case 'Ctrl':
             return;
           case 'ArrowUp':
-            if (colIndex || array[rowIndex]) this.prevPosition = colIndex;
             if (array[rowIndex - 1] === '') {
               newPosition = start - colIndex - 1;
             } else if (!colIndex && array[rowIndex - 1] !== undefined) {
@@ -165,27 +165,33 @@ class Keyboard {
             this.display.setSelectionRange(newPosition, newPosition);
             break;
           case 'ArrowDown':
-            newPosition = array[rowIndex + 1] !== undefined && colIndex <= array[rowIndex + 1].length
-              ? start + (array[rowIndex].length + 1)
-              : displayLength;
-
-            if (array[rowIndex + 1] !== undefined && colIndex > array[rowIndex + 1].length) {
-              newPosition = start + (array[rowIndex].length - colIndex) + array[rowIndex + 1].length + 1;
+            if (array[rowIndex + 1] === '') {
+              newPosition = start + (array[rowIndex].length - colIndex) + 1;
+            } else if (!colIndex && array[rowIndex + 1] !== undefined) {
+              if (!colIndex && array[rowIndex]) {
+                newPosition = start + array[rowIndex].length + 1;
+              } else {
+                newPosition = this.prevPosition > array[rowIndex + 1].length
+                  ? start + array[rowIndex + 1] + 1
+                  : start + this.prevPosition + 1;
+              }
+            } else {
+              if (colIndex >= array[rowIndex + 1]?.length) {
+                newPosition = start + array[rowIndex + 1].length - array[rowIndex].length - colIndex;
+              } else {
+                newPosition = start + (array[rowIndex].length - colIndex) + colIndex + 1;
+              }
             }
 
-            if (!array[rowIndex]) newPosition = start + this.prevPosition + 1;
             this.display.setSelectionRange(newPosition, newPosition);
-            if (colIndex) this.prevPosition = colIndex;
             break;
           case 'ArrowLeft':
             if (start) start--;
             this.display.setSelectionRange(start, start);
-            if (colIndex) this.prevPosition = colIndex;
             break;
           case 'ArrowRight':
             start++;
             this.display.setSelectionRange(start, start);
-            if (colIndex) this.prevPosition = colIndex;
             break;
           default:
             return;
