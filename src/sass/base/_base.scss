@@ -1,0 +1,54 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+ html,
+ body {
+   overflow-x: hidden;
+ }
+
+html {
+  font-size: 62.5%;
+
+  @include respond(md) {
+    font-size: 56.25%;
+  }
+
+  @include respond(lg) {
+    font-size: 50%;
+  }
+
+  @include respond(xxl) {
+    font-size: 70%;
+  }
+}
+
+body {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+ul {
+  list-style: none;
+}
