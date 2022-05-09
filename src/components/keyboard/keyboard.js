@@ -130,7 +130,6 @@ class Keyboard {
             this.display.value += '\t';
             break;
           case 'Backspace':
-            /* eslint-disable no-case-declarations */
             const offset = start === end && start ? start - 1 : start;
             this.display.value = this.display.value.slice(0, offset)
               + this.display.value.slice(end);
@@ -172,7 +171,6 @@ class Keyboard {
             } else {
               newPosition = colIndex > array[rowIndex - 1]?.length
                 ? start - colIndex - 1
-                /* eslint-disable no-unsafe-optional-chaining */
                 : start - (array[rowIndex - 1]?.length + 1);
             }
             this.display.setSelectionRange(newPosition, newPosition);
